@@ -1,60 +1,11 @@
 <?php
 
-class Input {
+require_once './libraries/class.Input.php';
+require_once './libraries/class.Dialog.php';
+require_once './libraries/class.Response.php';
 
-    /**
-     * Check if request is an AJAX 
-     * 
-     */
-    function is_ajax_request() {
-        return $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-    }
 
-}
-
-class Response {
-
-    protected $input;
-    protected $data;
-
-    public function __construct() {
-        $this->input = new Input();
-    }
-
-    /**
-     * Add callback Javascript
-     *
-     * @access  public
-     * @param   string  $script
-     * @return  void
-     */
-    public function script($script) {
-        $this->data['scripts'][] = $script;
-    }
-
-    /**
-     * Send response to CIS.Ajax.response() Javascript function
-     *
-     * @access  public
-     * @param   boolean $data
-     * @return  void
-     */
-    public function send($return = FALSE) {
-        if (!empty($this->data) && $this->input->is_ajax_request()) {
-            $json_data = json_encode($this->data);
-            if ($return) {
-                return $json_data;
-            } else {
-                echo $json_data;
-                exit;
-            }
-        }
-    }
-
-}
-
-$script = "var count = parseInt($(this).find('.badge').text());
-    $(this).find('.badge').text(count + 1);";
+$script = "var count = parseInt($(this).find('.badge').text()); $(this).find('.badge').text(count + 1);";
 $response = new Response();
 $response->script($script);
 
@@ -62,6 +13,10 @@ $html = "<p><strong>Title: </strong>Name</p><p><strong>Content: </strong>Bonnie<
 $json_html = json_encode($html);
 $response->script("$('#response').html({$json_html})");
 
+$response->dialog(array(
+                    'title' => 'Basic Dialog',
+                    'content' => "<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>",
+                ));
 
 $response->send();
 ?>
