@@ -28,7 +28,7 @@
                 cache: false,
                 dataType: 'json',
                 type: 'GET',
-                context:'',
+                context:{},
                 success: function(data) {
                     CIS.Ajax.response.call(settings.context, data);
                 }
@@ -52,7 +52,7 @@
             // Execute all scripts from the response
             for (var i = 0, length = data.scripts.length; i < length; i++) {
                 try {
-                    (new Function(data.scripts[i])).call(context);
+                    eval(data.scripts[i]); 
                 } catch(ex) {
                     console.log(ex);
                 }
