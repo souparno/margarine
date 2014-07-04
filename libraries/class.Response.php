@@ -63,11 +63,20 @@ class Response {
     $('body').append({$json_html});
     $('#{$dialog_id}').dialog({
                       modal: true,
-                      buttons: {
-                        Ok: function() {
-                          $( this ).dialog( 'close' );
-                        }
-                      }
+                      	buttons: [
+		{
+			text: "Ok",
+			click: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+		{
+			text: "Cancel",
+			click: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	]
                     });
 JS;
 

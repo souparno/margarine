@@ -1,12 +1,13 @@
 <?php
 
-require_once './libraries/class.Input.php';
-require_once './libraries/class.Dialog.php';
-require_once './libraries/class.Response.php';
+require_once '../libraries/class.Input.php';
+require_once '../libraries/class.Dialog.php';
+require_once '../libraries/class.Response.php';
 
+
+$response = new Response();
 
 $script = "var count = parseInt($(context.this).find('.badge').text()); $(context.this).find('.badge').text(count + 1);";
-$response = new Response();
 $response->script($script);
 
 $html = "<p><strong>Title: </strong>Name</p><p><strong>Content: </strong>Bonnie</p>";

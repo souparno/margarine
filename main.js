@@ -21,7 +21,6 @@
          */
         request: function(url, settings) {
             settings = settings || {};
-            //var context = settings.context || this;
 
             settings = $.extend({
                 async: true,
