@@ -2,11 +2,13 @@
 
 class Response {
 
+    protected $url;
     protected $input;
     protected $dialog;
     protected $data;
 
     public function __construct() {
+        $this->url=new Url();
         $this->input = new Input();
         $this->dialog = new Dialog();
     }
@@ -68,7 +70,7 @@ class Response {
 		{
 			text: "Ok",
 			click: function() {
-				CIS.Ajax.request('');
+				CIS.Ajax.request('{$this->url->path()}');
 			}
 		},
 		{

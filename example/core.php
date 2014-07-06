@@ -1,5 +1,4 @@
 <?php
-
 require_once '../libraries/class.Input.php';
 require_once '../libraries/class.Dialog.php';
 require_once '../libraries/class.Response.php';
@@ -7,11 +6,10 @@ require_once '../libraries/class.Url.php';
 
 class App {
 
-    public $url;
+
     public $response;
 
     public function __construct() {
-        $this->url = new Url();
         $this->response = new Response();
     }
 
@@ -52,10 +50,10 @@ JS;
                 break;
 
             case 'dialog':
-                //echo $this->url->path();
-                $this->response->dialog(array(
+                $this->response->confirm(array(
                     'title' => 'Basic Dialog',
-                    'content' => "<p>The route url is " . $this->url->path() . "</p>",
+                    'content' => "<p>The content of every dialog box can be generated dynamically
+                        on the server side</p>",
                 ));
                 break;
         }
