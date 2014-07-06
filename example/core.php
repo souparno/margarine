@@ -3,72 +3,86 @@
 require_once '../libraries/class.Input.php';
 require_once '../libraries/class.Dialog.php';
 require_once '../libraries/class.Response.php';
+require_once '../libraries/class.Url.php';
 
 class App {
 
-    public static function validate($type) {
+    public $url;
+    public $response;
 
-        $response = new Response();
+    public function __construct() {
+        $this->url = new Url();
+        $this->response = new Response();
+    }
+
+    public function run($type) {
 
         switch ($type) {
 
             case 'a':
-                
+
                 $script = <<< JS
 var count = parseInt($(context.abc).find('.badge').text());
 $(context.abc).find('.badge').text(count + 1);
 JS;
-                $response->script($script);
+                $this->response->script($script);
                 break;
-            
+
             case 'a-trigger':
                 $script = <<< JS
 var count = parseInt($(context.this).find('.badge').text());
 $(context.this).find('.badge').text(count + 1);
                     
 var count2 = parseInt($(context.target).find('.badge').text());
-$(context.target).find('.badge').text(count + 1);
+$(context.target).find('.badge').text(count2 + 1);
 JS;
-                $response->script($script);
-                $response->script($script);
+                $this->response->script($script);
+
                 break;
-            
+
             case 'form':
+
+                $title = $_POST['title'];
+                $content = $_POST['content'];
+
+                $html = "<p><strong>Title: </strong>" . $title . "</p><p><strong>Content: </strong>" . $content . "</p>";
+                $json_html = json_encode($html);
+                $this->response->script("$(context.form_respose).html({$json_html})");
+
                 break;
-            
+
             case 'dialog':
-                $response->dialog(array(
+                //echo $this->url->path();
+                $this->response->dialog(array(
                     'title' => 'Basic Dialog',
-                    'content' => "<p>
-  This is the default dialog which is useful for displaying information.
-  The dialog window can be moved, resized and closed with the 'x' icon.
-  </p>",
+                    'content' => "<p>The route url is " . $this->url->path() . "</p>",
                 ));
                 break;
- 
         }
 
-        $response->send();
+        $this->response->send();
     }
 
 }
 
-if(isset($_GET['type'])) App::validate($_GET['type']);
+$app = new App();
+if (isset($_GET['type']))
+    $app->run($_GET['type']);
 
 
-/*
-$html = "<p><strong>Title: </strong>Name</p><p><strong>Content: </strong>Bonnie</p>";
-$json_html = json_encode($html);
-$response->script("$(context.response2).html({$json_html})");
-
-
-$html = "<p>Helo there how you doing</p>";
-$json_html = json_encode($html);
-
-$response->script("$(context.response3).html({$json_html})");*/
 
 
 
 
 
+/*
+  $html = "<p><strong>Title: </strong>Name</p><p><strong>Content: </strong>Bonnie</p>";
+  $json_html = json_encode($html);
+  $response->script("$(context.response2).html({$json_html})");
+
+
+  $html = "<p>Helo there how you doing</p>";
+  $json_html = json_encode($html);
+
+  $response->script("$(context.response3).html({$json_html})"); */
 ?>

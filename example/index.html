@@ -7,7 +7,7 @@ and open the template in the editor.
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="../external/css/jquery-ui/jquery-ui.min.css">
         <script src="../external/js/libs/jquery-1.9.0/jquery.min.js"></script>
         <style>
             body{
@@ -61,7 +61,7 @@ and open the template in the editor.
         <p> Via CIS.Ajax.request('url', {context: { this: $(this) }}) <a href="javascript:void(0);" id="click_btn1" class="ui-state-default ui-corner-all dialog-link">Click <span class="badge" style="color: #000">0</span></a></p>
         <p> Via CIS.Ajax.request('url', {context: {this: $(this),target:$("#click_btn1")}}) <a href="javascript:void(0);" id="click_btn2" class="ui-state-default ui-corner-all dialog-link">Trigger <span class="badge" style="color: #000">0</span></a></p>
         <h3>Ajaxify Form</h3>
-        <form>
+        <form style="float: left; width: 50%;">
             <table>
                 <tr>
                     <td>Title</td>
@@ -74,29 +74,44 @@ and open the template in the editor.
                 <tr>
                     <td></td>
                     <td>
-                        <p><a href="#" class="ui-state-default ui-corner-all">Submit</a></p>
+                        <button type="submit" class="ui-state-default ui-corner-all dialog-link">Submit</button>
                     </td>
                 </tr>
             </table>
         </form>
+        <div style="width: 50%;float: left;" id="form_response"></div>
+        <div style="clear: both;"></div>
         <h3>Ajaxify Dialog</h3>
         <p> Via CIS.Ajax.request('core.php', {context: { this: $(this) }})  <a href="#" id="btn_dialog" class="ui-state-default ui-corner-all dialog-link">Click </a></p>
         <script src="../main.js"></script>
         <script src="../external/js/libs/jquery-ui-1.11.0/jquery-ui.min.js"></script>  
         <script>
             $('#click_btn1').click(function() {
+                event.preventDefault();
                 CIS.Ajax.request('core.php?type=a', {context: {
                         abc: $(this)
                     }});
             });
             $('#click_btn2').click(function() {
+                event.preventDefault();
                 CIS.Ajax.request('core.php?type=a-trigger', {context: {
                         this: $(this),
                         target: $("#click_btn1")
                     }});
             });
-
+            $("form").on("submit", function(event) {
+                event.preventDefault();
+                var data = $(this).serialize();
+                CIS.Ajax.request('core.php?type=form', {
+                    type: 'POST',
+                    data: data,
+                    context: {
+                        form_respose: $('#form_response')
+                    }
+                });
+            });
             $('#btn_dialog').click(function() {
+                event.preventDefault();
                 CIS.Ajax.request('core.php?type=dialog');
             });
         </script>

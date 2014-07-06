@@ -23,6 +23,68 @@ class Response {
     }
 
     /**
+     * Show confirm dialog
+     *
+     * @access  public
+     * @param   string  $title
+     * @param   string  $body
+     * @param   string  $ok_label
+     * @param   string  $close_label
+     * @return  bool
+     */
+    public function confirm($data) {
+        $dialog_id = (empty($data['id'])) ? 'dialog-' . mt_rand(1000000, 9999999) : $data['id'];
+
+        $this->dialog->set_id($dialog_id);
+
+        if (!empty($data['title'])) {
+            $this->dialog->set_title($data['title']);
+        }
+
+        if (!empty($data['content'])) {
+            $this->dialog->set_content($data['content']);
+        }
+
+
+        $html = $this->dialog->html();
+        $json_html = json_encode($html);
+
+        /*
+         * - Append dialog HTML to <body>.
+         * - Store reference of the button that toggles this dialog (caller)
+         * on every async forms of the dialog.
+         * - Launch the dialog.
+         * - Register an event to destroy the dialog after it was closed
+         * (must use setTimeout to prevent the dialog from being completely removed
+         * before other scripts, which retrieve dialog's data, are executed,
+         * especially for dialogs that have no hidden effect or for IE).
+         */
+
+        $code = <<< JS
+    $('body').append({$json_html});
+    $('#{$dialog_id}').dialog({
+                      modal: true,
+                      	buttons: [
+		{
+			text: "Ok",
+			click: function() {
+				CIS.Ajax.request('');
+			}
+		},
+		{
+			text: "Cancel",
+			click: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	]
+                    });
+JS;
+
+        $this->script($code);
+    }
+
+    /**
      * Generate Dialog script
      *
      * @access  private
