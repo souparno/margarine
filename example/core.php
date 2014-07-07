@@ -20,8 +20,8 @@ class App {
             case 'a':
 
                 $script = <<< JS
-var count = parseInt($(context.abc).find('.badge').text());
-$(context.abc).find('.badge').text(count + 1);
+var count = parseInt($(context.this).find('.badge').text());
+$(context.this).find('.badge').text(count + 1);
 JS;
                 $this->response->script($script);
                 break;
@@ -64,7 +64,12 @@ JS;
                             'content' => "<p>The content of every dialog box can be generated dynamically
                         on the server side</p>",
                         ))) {
-                    $this->response->script('$(context.this).after("<div>Confirmed!</div>");');
+                    
+                    $script= <<< JS
+$(context.nnn).after('<div>Confirmed!</div>');
+console.log(context.nnn);                            
+JS;
+                    $this->response->script($script);
                 }
 
                 break;

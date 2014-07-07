@@ -37,16 +37,33 @@ class Response {
     public function confirm($data) {
 
         if (!isset($_POST['_dialog_confirmed'])) {
+           
             $dialog_id = (empty($data['id'])) ? 'dialog-' . mt_rand(1000000, 9999999) : $data['id'];
+            
             $this->dialog->set_id($dialog_id);
+            
             if (!empty($data['title'])) {
                 $this->dialog->set_title($data['title']);
             }
+            
             if (!empty($data['content'])) {
                 $this->dialog->set_content($data['content']);
             }
+            
             $html = $this->dialog->html();
             $json_html = json_encode($html);
+
+            /*
+             * - Append dialog HTML to <body>.
+             * - Store reference of the button that toggles this dialog (caller)
+             * on every async forms of the dialog.
+             * - Launch the dialog.
+             * - Register an event to destroy the dialog after it was closed
+             * (must use setTimeout to prevent the dialog from being completely removed
+             * before other scripts, which retrieve dialog's data, are executed,
+             * especially for dialogs that have no hidden effect or for IE).
+             */
+
             $code = <<< JS
     $('body').append({$json_html});
     $('#{$dialog_id}').dialog({
@@ -55,7 +72,7 @@ class Response {
 		{
 			text: "Ok",
 			click: function() {
-				CIS.Ajax.request('{$this->url->path()}', {
+				CIS.Ajax.request('{$this->url->uri()}', {
                                         type: 'POST',
                                         data: '_dialog_confirmed=1&&_dialog_id={$dialog_id}'
                                                                          }
@@ -74,13 +91,11 @@ JS;
             $this->script($code);
             return FALSE;
         }
-        
-        // Destroy dialog
-        $dialog_id = $_POST('_dialog_id');
-        $this->script("$('#{$dialog_id}').modal('hide');");
+
+        // Closing the DIalog
+        $dialog_id = $_POST['_dialog_id'];
+        $this->script("$('#{$dialog_id}').dialog('close');");
         return TRUE;
-        
-        
     }
 
     /**

@@ -90,7 +90,7 @@ and open the template in the editor.
             $('#click_btn1').click(function() {
                 event.preventDefault();
                 CIS.Ajax.request('core.php?type=a', {context: {
-                        abc: $(this)
+                        this: $(this)
                     }});
             });
             $('#click_btn2').click(function() {
@@ -117,8 +117,7 @@ and open the template in the editor.
             });
             $('#btn_dialog_confirm').click(function() {
                 event.preventDefault();
-                CIS.Ajax.request('core.php?type=confirm-dialog',{context:{this:$(this)}
-                });
+                CIS.Ajax.request('core.php?type=confirm-dialog',{context:{nnn:$(this)}});
             });
         </script>
     </body>

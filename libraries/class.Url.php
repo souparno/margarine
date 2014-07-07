@@ -2,11 +2,15 @@
 
 class Url {
 
-    function path() {
-
-        return sprintf(
-                "%s://%s%s", isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http', $_SERVER['SERVER_NAME'], $_SERVER['REQUEST_URI']
-        );
+    protected $requested_uri;
+    
+    function __construct() {
+        $this->requested_uri=$_SERVER['REQUEST_URI'];
+    }
+   
+    function uri() {
+        return $this->requested_uri;
+        
     }
 
 }
