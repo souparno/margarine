@@ -1,11 +1,11 @@
 <?php
+
 require_once '../libraries/class.Input.php';
 require_once '../libraries/class.Dialog.php';
 require_once '../libraries/class.Response.php';
 require_once '../libraries/class.Url.php';
 
 class App {
-
 
     public $response;
 
@@ -50,11 +50,23 @@ JS;
                 break;
 
             case 'dialog':
-                $this->response->confirm(array(
+                $this->response->dialog(array(
                     'title' => 'Basic Dialog',
                     'content' => "<p>The content of every dialog box can be generated dynamically
                         on the server side</p>",
                 ));
+                break;
+
+            case 'confirm-dialog':
+
+                if ($this->response->confirm(array(
+                            'title' => 'Basic Dialog',
+                            'content' => "<p>The content of every dialog box can be generated dynamically
+                        on the server side</p>",
+                        ))) {
+                    $this->response->script('$(context.this).after("<div>Confirmed!</div>");');
+                }
+
                 break;
         }
 

@@ -83,6 +83,7 @@ and open the template in the editor.
         <div style="clear: both;"></div>
         <h3>Ajaxify Dialog</h3>
         <p> Via CIS.Ajax.request('core.php', {context: { this: $(this) }})  <a href="#" id="btn_dialog" class="ui-state-default ui-corner-all dialog-link">Click </a></p>
+        <p> Ajaxify Confirm Dialog  <a href="#" id="btn_dialog_confirm" class="ui-state-default ui-corner-all dialog-link">Click </a></p>
         <script src="../main.js"></script>
         <script src="../external/js/libs/jquery-ui-1.11.0/jquery-ui.min.js"></script>  
         <script>
@@ -113,6 +114,11 @@ and open the template in the editor.
             $('#btn_dialog').click(function() {
                 event.preventDefault();
                 CIS.Ajax.request('core.php?type=dialog');
+            });
+            $('#btn_dialog_confirm').click(function() {
+                event.preventDefault();
+                CIS.Ajax.request('core.php?type=confirm-dialog',{context:{this:$(this)}
+                });
             });
         </script>
     </body>
