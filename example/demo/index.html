@@ -61,6 +61,14 @@ and open the template in the editor.
         <p> Via CIS.Ajax.request('url', {context: { this: $(this) }}) <a href="javascript:void(0);" id="click_btn1" class="ui-state-default ui-corner-all dialog-link">Click <span class="badge" style="color: #000">0</span></a></p>
         <p> Via CIS.Ajax.request('url', {context: {this: $(this),target:$("#click_btn1")}}) <a href="javascript:void(0);" id="click_btn2" class="ui-state-default ui-corner-all dialog-link">Trigger <span class="badge" style="color: #000">0</span></a></p>
         <h3>Ajaxify Form</h3>
+        
+        Via CIS.Ajax.request('url', {
+        type: 'POST',
+        data: data,
+        context: {
+        form_respose: $('#form_response')
+        }})
+        
         <form style="float: left; width: 50%;">
             <table>
                 <tr>
@@ -82,9 +90,13 @@ and open the template in the editor.
         <div style="width: 50%;float: left;" id="form_response"></div>
         <div style="clear: both;"></div>
         <h3>Ajaxify Dialog</h3>
-        <p> Via CIS.Ajax.request('core.php', {context: { this: $(this) }})  <a href="#" id="btn_dialog" class="ui-state-default ui-corner-all dialog-link">Click </a></p>
+        <p> Ajaxify Simple Modal    <a href="#" id="btn_dialog" class="ui-state-default ui-corner-all dialog-link">Click </a></p>
         <p> Ajaxify Confirm Dialog  <a href="#" id="btn_dialog_confirm" class="ui-state-default ui-corner-all dialog-link">Click </a></p>
-        <script src="../../main.js"></script>
+
+
+        <!-- Including the main.js and the jqueryui library  -->
+
+        <script src="../../js/main.js"></script>
         <script src="../../external/js/libs/jquery-ui-1.11.0/jquery-ui.min.js"></script>  
         <script>
             $('#click_btn1').click(function() {
@@ -117,7 +129,7 @@ and open the template in the editor.
             });
             $('#btn_dialog_confirm').click(function() {
                 event.preventDefault();
-                CIS.Ajax.request('class.App.php?type=confirm-dialog',{context:{this:$(this)}});
+                CIS.Ajax.request('class.App.php?type=confirm-dialog', {context: {this: $(this)}});
             });
         </script>
     </body>
