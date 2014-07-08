@@ -1,9 +1,9 @@
 <?php
 
-require_once '../libraries/class.Input.php';
-require_once '../libraries/class.Dialog.php';
-require_once '../libraries/class.Response.php';
-require_once '../libraries/class.Url.php';
+require_once '../../libraries/class.Input.php';
+require_once '../../libraries/class.Dialog.php';
+require_once '../../libraries/class.Response.php';
+require_once '../../libraries/class.Url.php';
 
 class App {
 
@@ -66,8 +66,8 @@ JS;
                         ))) {
                     
                     $script= <<< JS
-$(context.nnn).after('<div>Confirmed!</div>');
-console.log(context.nnn);                            
+$(context.this).after('<div>Confirmed!</div>');
+console.log(context.this);                            
 JS;
                     $this->response->script($script);
                 }
