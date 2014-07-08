@@ -89,13 +89,13 @@ and open the template in the editor.
         <script>
             $('#click_btn1').click(function() {
                 event.preventDefault();
-                CIS.Ajax.request('core.php?type=a', {context: {
+                CIS.Ajax.request('class.App.php?type=a', {context: {
                         this: $(this)
                     }});
             });
             $('#click_btn2').click(function() {
                 event.preventDefault();
-                CIS.Ajax.request('core.php?type=a-trigger', {context: {
+                CIS.Ajax.request('class.App.php?type=a-trigger', {context: {
                         this: $(this),
                         target: $("#click_btn1")
                     }});
@@ -103,7 +103,7 @@ and open the template in the editor.
             $("form").on("submit", function(event) {
                 event.preventDefault();
                 var data = $(this).serialize();
-                CIS.Ajax.request('core.php?type=form', {
+                CIS.Ajax.request('class.App.php?type=form', {
                     type: 'POST',
                     data: data,
                     context: {
@@ -113,11 +113,11 @@ and open the template in the editor.
             });
             $('#btn_dialog').click(function() {
                 event.preventDefault();
-                CIS.Ajax.request('core.php?type=dialog');
+                CIS.Ajax.request('class.App.php?type=dialog');
             });
             $('#btn_dialog_confirm').click(function() {
                 event.preventDefault();
-                CIS.Ajax.request('core.php?type=confirm-dialog',{context:{this:$(this)}});
+                CIS.Ajax.request('class.App.php?type=confirm-dialog',{context:{this:$(this)}});
             });
         </script>
     </body>

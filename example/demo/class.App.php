@@ -84,20 +84,4 @@ $app = new App();
 if (isset($_GET['type']))
     $app->run($_GET['type']);
 
-
-
-
-
-
-
-/*
-  $html = "<p><strong>Title: </strong>Name</p><p><strong>Content: </strong>Bonnie</p>";
-  $json_html = json_encode($html);
-  $response->script("$(context.response2).html({$json_html})");
-
-
-  $html = "<p>Helo there how you doing</p>";
-  $json_html = json_encode($html);
-
-  $response->script("$(context.response3).html({$json_html})"); */
 ?>
