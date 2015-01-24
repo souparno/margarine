@@ -99,13 +99,13 @@ and open the template in the editor.
         <script src="../../js/main.js"></script>
         <script src="../../external/js/libs/jquery-ui-1.11.0/jquery-ui.min.js"></script>  
         <script>
-            $('#click_btn1').click(function() {
+            $('#click_btn1').click(function(event) {
                 event.preventDefault();
                 CIS.Ajax.request('class.App.php?type=a', {context: {
                         this: $(this)
                     }});
             });
-            $('#click_btn2').click(function() {
+            $('#click_btn2').click(function(event) {
                 event.preventDefault();
                 CIS.Ajax.request('class.App.php?type=a-trigger', {context: {
                         this: $(this),
@@ -123,11 +123,11 @@ and open the template in the editor.
                     }
                 });
             });
-            $('#btn_dialog').click(function() {
+            $('#btn_dialog').click(function(event) {
                 event.preventDefault();
                 CIS.Ajax.request('class.App.php?type=dialog');
             });
-            $('#btn_dialog_confirm').click(function() {
+            $('#btn_dialog_confirm').click(function(event) {
                 event.preventDefault();
                 CIS.Ajax.request('class.App.php?type=confirm-dialog', {context: {this: $(this)}});
             });
